@@ -1,0 +1,85 @@
+Project 1
+
+Part 1: Writing iPerfer
+- Need two computers both running iPerfer
+  - Client sends the data, server recieves the data
+
+
+
+Server Mode
+./iPerfer -s -p <listen_port>
+
+Command Line Args
+- the -s indicates this is the iPerfer server which should consume the data
+- the -p comes before the port
+- <listen_port> is the port on which the host is waiting to consume data
+  - must be within the range 1024 - 65536 (inclusive)
+
+Process
+- Check command line args, return if errors
+- Recieve chunks of data (1000 bytes or 1kB) as quickly as possible
+- Record number of chunks as they arrive
+- Wait for FIN message
+- Send acknowledgement (ACK) to FIN message
+- Exit and print summary "Recieved=X KB, Rate=Y Mbps"
+
+
+
+Client Mode
+./iPerfer -c -h <server_hostname> -p <server_port> -t <time>
+
+Command Line Args
+- the -c indicates this is the iPerfer client which should generate data
+- server_hostname is the hostname or IP address of the iPerfer server which will consume data
+- server_port port on which the remote host will consume data
+  - must be in the range 1024 - 65536 (inclusive)
+- time is the duration in seconds for which data should be generated
+  - only tested with an integer value, use time.h
+
+Process
+- Check command line args, return if errors
+- Establish TCP connection with the server
+- Send chucks of data (1000 bytes or 1kB) as quicky as possible for <time> seconds
+- Record number of bytes sent
+- Send FIN message
+- Wait for ACK
+
+
+
+
+
+Implementation
+- Use getopt for command line args?
+  - No just used argv[] and argc, it's easier and in C
+
+Architecture
+- Check first argument for client or server
+- Check command line arguments for formatting and correctness
+  - Check arguments
+    - Return if extra
+    - Return if missing
+  - Check port argument for range
+    - Return if not in range
+  - Check time argument if client
+    - Return if invalid time
+- Client
+  - Open TCP connection to <server_hostname> on <server_port>
+  - Create and format data (packets?)
+  - Create and format FIN
+  - Enter while loop (while time has not expired)
+    - Send packet
+    - Add to packet number sent
+  - Send FIN
+  - Enter while loop (while ACK has not been recieved)
+    - Poll for ACK
+  - Print Summary
+- Server
+  - Open port?
+  - Create and format ACK
+  - Enter while loop (while TCP has not been established)
+    - Listen?
+  - Enter while loop (while FIN has not been recieved)
+    - Recieve data
+    - Count number of chunks
+  - Send ACK
+  - Shutdown gracefully?
