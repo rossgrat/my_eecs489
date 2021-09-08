@@ -1,11 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "server.c"
 
-//Sockets
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netdb.h>
 
 //Error Message Functions
 void argsError(){
@@ -99,16 +93,16 @@ int main(int argc, char* argv[]){
     if(error_check == -1){
       return -1;
     } 
-    runServer(argv);
+    runMyServer(argv);
   }
   //Error check client command line arguments and start client
   else if(strcmp(argv[1], "-c") == 0){
     printf("Entering Client Mode\n");
-    error_check = clientCommandParse();
+    error_check = clientCommandParse(argc, argv);
     if(error_check == -1){
       return -1;
     }
-    runClient(argv);
+    //runClient(argv);
   }
   else{
     argsError();
