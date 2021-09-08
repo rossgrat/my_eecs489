@@ -14,24 +14,27 @@ int setupMyServerSocket(struct myServer* s_ptr, int argv_3){
     printf("Error: bad socket\n");
     return -1;
   }
-
+  //Add socket option to allow address to be used again
   int ok = 1;  
   if(setsockopt(s_ptr->s_socket, SOL_SOCKET, SO_REUSEADDR, &ok, sizeof(ok)) == -1){
     printf("Error: bad setsockopt\n");
     return -1;
   }
   
+  //Set values for sockaddr_in struct
   s_ptr->s_addr_len = (socklen_t)sizeof(s_ptr->s_addr);
   memset(&s_ptr->s_addr, 0, s_ptr->s_addr_len);
   s_ptr->s_addr.sin_family = AF_INET;
   s_ptr->s_addr.sin_addr.s_addr = htonl(INADDR_ANY);
   s_ptr->s_addr.sin_port = htons(s_ptr->s_port);
 
+  //Bind socket to address
   if(bind(s_ptr->s_socket, (const struct sockaddr*) &s_ptr->s_addr, s_ptr->s_addr_len) == -1){
     printf("Error: bad bind\n");
     return -1;
   }
 
+  //Set socket to listen
   if(listen(s_ptr->s_socket, 10) == -1){
     printf("Error: bad listen\n");
     return -1;
