@@ -50,7 +50,60 @@ int setupMyServerSocket(struct myServer* s_ptr, int argv_3){
 int acceptOnMyServer(struct myServer* s_ptr){
 
   while(1){
-  
+    s_ptr->c_addr_len = (socklen_t)sizeof(s_ptr->c_addr);
+    
+    //Wait for a client to make a connection to the server, accept that connection
+    s_ptr->connfd = accept(s_ptr->s_socket, (struct sockaddr*)&s_ptr->c_addr, (unsigned int*)&s_ptr->c_addr_len);
+    /* 
+    s_ptr-> c_ip = 0;
+    s_ptr-> c_port = 0;
+    
+    //Get format client IPv4 client address
+    s_ptr->c_ip = ntohl(s_ptr->c_addr.sin_addr.s_addr);
+    s_ptr->c_port = ntohs(s_ptr->c_addr.sin_port);
+    sprintf(s_ptr->c_name, "%d.%d.%d.%d:%d",
+    	    s_ptr->c_ip >> 24,
+	    (s_ptr->c_ip & 0x00ff0000) >> 16,
+	    (s_ptr->c_ip & 0x0000ff00) >> 8,
+	    (s_ptr->c_ip & 0x000000ff),
+	    s_ptr->c_port);
+    printf("%s connected!\n", s_ptr->c_name);
+    if(s_ptr->connfd == -1){
+      printf("Error: bad accept\n");
+      return -1;
+    }
+    */
+
+    //Recieve messages from client connection and place into butter
+    //num_recvd is the number of bytes recieved
+    //
+
+    //Begin timer after accept and error checking
+    //Accept data as quickly as possible
+    //Count number of bytes recieved and number of 1000 byte packets recieved
+
+
+    char buffer[1000];
+    while(1){
+
+
+      s_ptr->s_num_recvd = recv(s_ptr->connfd, s_ptr->s_buffer, 1000, MSG_NOSIGNAL);
+      if(s_ptr->s_num_recvd == 0){
+        break;
+      }
+      else if(s_ptr->s_num_recvd == -1){
+        printf("bad recv");
+	break;
+      }
+      printf("[MSG_SIZE=%li BYTES]%s\n", s_ptr->s_num_recvd, s_ptr->s_buffer);
+
+      //Send accepted message to the client
+      char msg[11] = "Accepted\n";
+      int num_sent = send(s_ptr->connfd, msg, 12, MSG_NOSIGNAL);
+
+    }
+    printf("%s disconnected!\n", s_ptr->c_name);
+    close(s_ptr->connfd);
 
   }
 
@@ -69,7 +122,5 @@ int runMyServer(char* argv[]){
     printf("Error: server setup\n");
     return -1;
   }
-
-
-  printf("myServer.port = %i", my_server.s_port);
+  acceptOnMyServer(my_server_ptr); 
 }

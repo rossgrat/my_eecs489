@@ -6,14 +6,14 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netdb.h>
-
+#include <unistd.h>
 
 
 struct myServer{
   //Server Information
   int s_port;
   int s_socket;
-  
+
   //Legacy values? Required for bind
   struct sockaddr_in s_addr;
   socklen_t s_addr_len;
@@ -24,6 +24,11 @@ struct myServer{
   uint32_t c_ip;
   uint32_t c_port;
   char c_name[100];
+  
+  //Connection
+  int connfd;
+  char s_buffer[1000];
+  ssize_t s_num_recvd;
 
   //Function pointers for server
   //in (*setupMyServerSocket)();
