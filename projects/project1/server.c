@@ -53,7 +53,8 @@ int acceptOnMyServer(struct myServer* s_ptr){
     
   //Wait for a client to make a connection to the server, accept that connection
   s_ptr->connfd = accept(s_ptr->s_socket, (struct sockaddr*)&s_ptr->c_addr, (unsigned int*)&s_ptr->c_addr_len);
-    
+
+  /*  
   s_ptr-> c_ip = 0;
   s_ptr-> c_port = 0;
 
@@ -71,7 +72,7 @@ int acceptOnMyServer(struct myServer* s_ptr){
     printf("Error: bad accept\n");
     return -1;
   }
-
+  */
   //Get start time
   time(&s_ptr->start_time);
 
@@ -101,11 +102,11 @@ int acceptOnMyServer(struct myServer* s_ptr){
   
   //Calculate mbps and kb recieved 
   int time_elapsed = difftime(s_ptr->end_time, s_ptr->start_time); 
-  float mbps = s_ptr->s_total_recvd / 100000;
-  float kb_rec = s_ptr->s_total_recvd / 1000;
+  float mbps = s_ptr->s_total_recvd / 100000 / time_elapsed;
+  long kb_rec = floor(s_ptr->s_total_recvd) / 1000;
 
   //Print out mbps and kb for the autograder
-  printf("Received=%f KB, Rate=%f Mps", kb_rec, mbps);
+  printf("Received=%ld KB, Rate=%0.3f Mps\n", kb_rec, mbps);
   close(s_ptr->connfd);
 }
 

@@ -49,12 +49,17 @@ int sendFromMyClient(struct myClient* c_ptr){
   time_t c_now_time;
   time(&c_now_time);
   time(&c_ptr->c_start_time);
-  int c_num_sent = 0;
+
+  long c_num_sent = 0;
+  c_ptr->c_total_sent = 0;
+
   while(difftime(c_now_time, c_ptr->c_start_time) < c_ptr->c_runtime){
+    //printf("Total Bytes Sent: %i\n", c_ptr->c_total_sent);
     c_num_sent = send(c_ptr->c_socket, c_ptr->data_packet, 1000, MSG_NOSIGNAL);
     time(&c_now_time);
-    //TODO: Add counting for sent packets
+    c_ptr->c_total_sent = c_ptr->c_total_sent + c_num_sent;
   }
+  
   //Send FIN packet of all 1's and wait to recieve "ACK" from server
   c_num_sent = send(c_ptr->c_socket, c_ptr->fin_packet, 1000, MSG_NOSIGNAL);
   recv(c_ptr->c_socket, c_ptr->ack_buffer, 4, MSG_NOSIGNAL);
@@ -62,7 +67,11 @@ int sendFromMyClient(struct myClient* c_ptr){
       printf("Error: improper server ACK\n");
       return -1;
   }
-  //TODO: Add output for mbps and KB sent
+
+  //Calculate mbps and kb recieved 
+  float mbps = c_ptr->c_total_sent / 100000 / c_ptr->c_runtime;
+  long kb_rec = floor(c_ptr->c_total_sent) / 1000;
+  printf("Sent=%ld KB, Rate=%0.3f Mps\n", kb_rec, mbps);
 
   return 0;
 }

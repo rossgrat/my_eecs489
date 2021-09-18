@@ -11,6 +11,9 @@
 //Timing
 #include <time.h>
 
+//Math
+#include <math.h>
+
 struct myServer{
   //Server information
   int s_port;
@@ -45,6 +48,7 @@ struct myClient{
   int c_port;
   int c_socket;
   char c_hostname[1000];
+  ssize_t c_total_sent;
 
   //Timing
   time_t c_start_time;

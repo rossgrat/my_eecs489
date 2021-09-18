@@ -87,7 +87,7 @@ int main(int argc, char* argv[]){
   }
   //Error check server command line arguments and start server
   if(strcmp(argv[1], "-s") == 0){
-    printf("Entering Server Mode\n");
+    //printf("Entering Server Mode\n");
     error_check = serverCommandParse(argc, argv);
     if(error_check == -1){
       return -1;
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]){
   }
   //Error check client command line arguments and start client
   else if(strcmp(argv[1], "-c") == 0){
-    printf("Entering Client Mode\n");
+    //printf("Entering Client Mode\n");
     error_check = clientCommandParse(argc, argv);
     if(error_check == -1){
       return -1;
