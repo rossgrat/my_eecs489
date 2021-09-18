@@ -8,9 +8,11 @@
 #include <netdb.h>
 #include <unistd.h>
 
+//Timing
+#include <time.h>
 
 struct myServer{
-  //Server Information
+  //Server information
   int s_port;
   int s_socket;
 
@@ -27,9 +29,44 @@ struct myServer{
   
   //Connection
   int connfd;
-  char s_buffer[1000];
-  ssize_t s_num_recvd;
+  uint8_t s_buffer[1000];
+  ssize_t s_total_recvd;
+
+  // Timing
+  time_t start_time;
+  time_t end_time;
 
   //Function pointers for server
-  //in (*setupMyServerSocket)();
+  //int (*setupMyServerSocket)();
 };
+
+struct myClient{
+  //Client information
+  int c_port;
+  int c_socket;
+  char c_hostname[1000];
+
+  //Timing
+  time_t c_start_time;
+  int c_runtime;
+
+  //Legacy values? Required for connect
+  struct sockaddr_in c_addr;
+  socklen_t c_addr_len;
+
+  //Server connection information
+  struct hostent* s_host;
+
+  //Packet Information
+  uint8_t data_packet[1000];
+  uint8_t fin_packet[1000];
+
+  //Recieve ACK
+  char ack_buffer[4];
+};
+
+//Server functions
+int runMyServer(char**);
+
+//Client function
+int runMyClient(char**);

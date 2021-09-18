@@ -1,5 +1,4 @@
-#include "server.c"
-
+#include "header.h"
 
 //Error Message Functions
 void argsError(){
@@ -102,7 +101,7 @@ int main(int argc, char* argv[]){
     if(error_check == -1){
       return -1;
     }
-    //runClient(argv);
+    runMyClient(argv);
   }
   else{
     argsError();
