@@ -80,7 +80,9 @@ int sendFromMyClient(struct myClient* c_ptr){
   float mbps = c_ptr->c_total_sent / time_elapsed / 100000 * 8;
   long kb_rec = c_ptr->c_total_sent / 1000;
 
+  float mb = c_ptr->c_total_sent/ 100000 * 8;
   printf("TIME ELAPSED: %i\n", time_elapsed);
+  printf("MEGABITS: %f", mb);
   printf("Sent=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);
 
   return 0;

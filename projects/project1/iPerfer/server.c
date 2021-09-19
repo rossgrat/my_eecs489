@@ -108,7 +108,9 @@ int acceptOnMyServer(struct myServer* s_ptr){
   float mbps = s_ptr->s_total_recvd / time_elapsed / 100000 * 8;
   long kb_rec = s_ptr->s_total_recvd / 1000;
 
+  float mb = s_ptr->s_total_recvd/ 100000 * 8;
   printf("TIME ELAPSED: %i\n", time_elapsed);
+  printf("MEGABITS: %f", mb);
   //Print out mbps and kb for the autograder
   printf("Received=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);
   close(s_ptr->connfd);
