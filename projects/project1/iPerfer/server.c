@@ -99,11 +99,8 @@ int acceptOnMyServer(struct myServer* s_ptr){
   time(&s_ptr->end_time);
 
   //Send ACK message to FIN from client
-  /*char msg[4] = "ACK";
+  char msg[4] = "ACK";
   int num_sent = send(s_ptr->connfd, msg, 1000, MSG_NOSIGNAL);
-  */
-  uint8_t test[1] = {0xFF};
-  send(s_ptr->connfd, test, 1, MSG_NOSIGNAL);
   printf("ACK SENT\n");
   
   //Calculate mbps and kb recieved 
