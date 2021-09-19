@@ -3,3 +3,5 @@ all: iPerfer
 
 iPerfer:	$(OBJS)
 			$(CC) -o iPerfer $(OBJS)
+clean: 
+		-rm $(OBJS) iPerfer
