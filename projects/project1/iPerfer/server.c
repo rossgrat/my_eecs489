@@ -83,6 +83,7 @@ int acceptOnMyServer(struct myServer* s_ptr){
     s_num_recvd = recv(s_ptr->connfd, s_ptr->s_buffer, 1000, MSG_NOSIGNAL);
     //Check for FIN
     if(s_ptr->s_buffer[0] == 0xFF){
+      printf("FIN RECIEVED\n");
       break;
     }
 
@@ -103,6 +104,7 @@ int acceptOnMyServer(struct myServer* s_ptr){
   */
   uint8_t test[1] = {0xFF};
   send(s_ptr->connfd, test, 1, MSG_NOSIGNAL);
+  printf("ACK SENT\n");
   
   //Calculate mbps and kb recieved 
   int time_elapsed = difftime(s_ptr->end_time, s_ptr->start_time); 

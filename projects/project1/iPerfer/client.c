@@ -58,18 +58,20 @@ int sendFromMyClient(struct myClient* c_ptr){
     c_num_sent = send(c_ptr->c_socket, c_ptr->data_packet, 1000, MSG_NOSIGNAL);
     time(&c_now_time);
     c_ptr->c_total_sent = c_ptr->c_total_sent + c_num_sent;
-    printf("TOTAL SENT: %i\n", c_ptr->c_total_sent);
+    printf("TOTAL SENT: %li\n", c_ptr->c_total_sent);
   }
   
   //Send FIN packet of all 1's and wait to recieve "ACK" from server
   uint8_t test[1] = {0xFF};
   send(c_ptr->c_socket, test, 1, MSG_NOSIGNAL);
+  printf("FIN SENT\n");
   test[0] = 0x00;
   recv(c_ptr->c_socket, test, 1, MSG_NOSIGNAL);
   if(test[0] != 0xFF){
     printf("Error: improper server ACK\n");
     return -1;
   }
+  printf("ACKRECIEVED\n");
 
 
   /*c_num_sent = send(c_ptr->c_socket, c_ptr->fin_packet, 1000, MSG_NOSIGNAL);
