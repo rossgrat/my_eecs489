@@ -1,0 +1,7 @@
+------------------------------------------------------------
+Client connecting to 10.0.0.10, TCP port 9000
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[ 39] local 10.0.0.1 port 36316 connected with 10.0.0.10 port 9000
+[ ID] Interval       Transfer     Bandwidth
+[ 39]  0.0-23.6 sec  50.1 MBytes  17.8 Mbits/sec
