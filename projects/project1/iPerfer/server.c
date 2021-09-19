@@ -97,14 +97,18 @@ int acceptOnMyServer(struct myServer* s_ptr){
   time(&s_ptr->end_time);
 
   //Send ACK message to FIN from client
-  char msg[4] = "ACK";
+  /*char msg[4] = "ACK";
   int num_sent = send(s_ptr->connfd, msg, 1000, MSG_NOSIGNAL);
+  */
+  uint8_t test[1] = {0xFF};
+  send(s_ptr->connfd, test, 1, MSG_NOSIGNAL);
   
   //Calculate mbps and kb recieved 
   int time_elapsed = difftime(s_ptr->end_time, s_ptr->start_time); 
   float mbps = s_ptr->s_total_recvd / time_elapsed / 100000 * 8;
-  long kb_rec = floor(s_ptr->s_total_recvd) / 1000;
+  long kb_rec = s_ptr->s_total_recvd / 1000;
 
+  printf("TIME ELAPSED: %i\n", time_elapsed);
   //Print out mbps and kb for the autograder
   printf("Received=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);
   close(s_ptr->connfd);

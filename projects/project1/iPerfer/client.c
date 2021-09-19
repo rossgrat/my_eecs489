@@ -61,17 +61,32 @@ int sendFromMyClient(struct myClient* c_ptr){
   }
   
   //Send FIN packet of all 1's and wait to recieve "ACK" from server
-  c_num_sent = send(c_ptr->c_socket, c_ptr->fin_packet, 1000, MSG_NOSIGNAL);
-  recv(c_ptr->c_socket, c_ptr->ack_buffer, 4, MSG_NOSIGNAL);
+  uint8_t test[1] = {0xFF};
+  send(c_ptr->c_socket, test, 1, MSG_NOSIGNAL);
+  test[0] = 0x00;
+  recv(c_ptr->c_socket, test, 1, MSG_NOSIGNAL);
+  if(test[0] != 0xFF){
+    printf("Error: improper server ACK\n");
+    return -1;
+  }
+
+
+  /*c_num_sent = send(c_ptr->c_socket, c_ptr->fin_packet, 1000, MSG_NOSIGNAL);
+  recv(c_ptr->c_socket, c_ptr->ack_buffer, 1, MSG_NOSIGNAL);
   if(strcmp(c_ptr->ack_buffer, "ACK") != 0){
       printf("Error: improper server ACK\n");
       return -1;
   }
+  */
+  time_t c_end_time;
+  time(&c_end_time);
 
   //Calculate mbps and kb recieved 
-  int time_elapsed = difftime(c_now_time, c_ptr->c_start_time); 
-  float mbps = c_ptr->c_total_sent / 100000 / c_ptr->c_runtime;
-  long kb_rec = floor(c_ptr->c_total_sent) / 1000;
+  int time_elapsed = difftime(c_end_time, c_ptr->c_start_time); 
+  float mbps = c_ptr->c_total_sent / time_elapsed / 100000 * 8;
+  long kb_rec = c_ptr->c_total_sent / 1000;
+
+  printf("TIME ELAPSED: %i\n", time_elapsed);
   printf("Sent=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);
 
   return 0;
