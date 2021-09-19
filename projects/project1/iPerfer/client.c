@@ -69,9 +69,10 @@ int sendFromMyClient(struct myClient* c_ptr){
   }
 
   //Calculate mbps and kb recieved 
+  int time_elapsed = difftime(c_now_time, c_ptr->c_start_time); 
   float mbps = c_ptr->c_total_sent / 100000 / c_ptr->c_runtime;
   long kb_rec = floor(c_ptr->c_total_sent) / 1000;
-  printf("Sent=%ld KB, Rate=%0.3f Mps\n", kb_rec, mbps);
+  printf("Sent=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);
 
   return 0;
 }

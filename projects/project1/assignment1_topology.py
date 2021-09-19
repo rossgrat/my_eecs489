@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 
 Measurement topology for EECS489, Winter 2017, Assignment 1
