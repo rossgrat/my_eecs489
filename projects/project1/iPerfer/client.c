@@ -66,7 +66,7 @@ int sendFromMyClient(struct myClient* c_ptr){
 
   send(c_ptr->c_socket, c_ptr->fin_packet, 1000, MSG_NOSIGNAL);  
   printf("FIN SENT\n");
-  recv(c_ptr->c_socket, c_ptr->ack_buffer, 1, MSG_NOSIGNAL);
+  recv(c_ptr->c_socket, c_ptr->ack_buffer, 4, MSG_NOSIGNAL);
   if(strcmp(c_ptr->ack_buffer, "ACK") != 0){
       printf("Error: improper server ACK\n");
       return -1;
