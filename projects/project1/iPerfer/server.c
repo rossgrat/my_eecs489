@@ -104,12 +104,12 @@ int acceptOnMyServer(struct myServer* s_ptr){
   printf("ACK SENT\n");
   
   //Calculate mbps and kb recieved 
-  int time_elapsed = difftime(s_ptr->end_time, s_ptr->start_time); 
-  float mbps = s_ptr->s_total_recvd / time_elapsed / 100000 * 8;
+  float time_elapsed = difftime(s_ptr->end_time, s_ptr->start_time); 
+  float mbps = s_ptr->s_total_recvd / time_elapsed / 1000000 * 8;
   long kb_rec = s_ptr->s_total_recvd / 1000;
 
   float mb = s_ptr->s_total_recvd/ 1000000 * 8;
-  printf("TIME ELAPSED: %i\n", time_elapsed);
+  printf("TIME ELAPSED: %f\n", time_elapsed);
   printf("MEGABITS: %f\n", mb);
   //Print out mbps and kb for the autograder
   printf("Received=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);

@@ -76,12 +76,12 @@ int sendFromMyClient(struct myClient* c_ptr){
   time(&c_end_time);
 
   //Calculate mbps and kb recieved 
-  int time_elapsed = difftime(c_end_time, c_ptr->c_start_time); 
-  float mbps = c_ptr->c_total_sent / time_elapsed / 100000 * 8;
+  float time_elapsed = difftime(c_end_time, c_ptr->c_start_time); 
+  float mbps = c_ptr->c_total_sent / time_elapsed / 1000000 * 8;
   long kb_rec = c_ptr->c_total_sent / 1000;
 
   float mb = c_ptr->c_total_sent/ 1000000 * 8;
-  printf("TIME ELAPSED: %i\n", time_elapsed);
+  printf("TIME ELAPSED: %f\n", time_elapsed);
   printf("MEGABITS: %f\n", mb);
   printf("Sent=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);
 
