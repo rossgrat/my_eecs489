@@ -58,6 +58,7 @@ int sendFromMyClient(struct myClient* c_ptr){
     c_num_sent = send(c_ptr->c_socket, c_ptr->data_packet, 1000, MSG_NOSIGNAL);
     time(&c_now_time);
     c_ptr->c_total_sent = c_ptr->c_total_sent + c_num_sent;
+    printf("TOTAL SENT: %i\n", c_ptr->c_total_sent);
   }
   
   //Send FIN packet of all 1's and wait to recieve "ACK" from server

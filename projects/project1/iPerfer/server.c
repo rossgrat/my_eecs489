@@ -92,6 +92,7 @@ int acceptOnMyServer(struct myServer* s_ptr){
     }
 
     s_ptr->s_total_recvd = s_ptr->s_total_recvd + s_num_recvd; 
+    printf("TOTAL RECVD: %i\n", s_ptr->s_total_recvd);
   }
   //Quickly get time FIN was recieved
   time(&s_ptr->end_time);
