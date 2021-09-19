@@ -71,7 +71,7 @@ int sendFromMyClient(struct myClient* c_ptr){
     printf("Error: improper server ACK\n");
     return -1;
   }
-  printf("ACKRECIEVED\n");
+  printf("ACK RECIEVED\n");
 
 
   /*c_num_sent = send(c_ptr->c_socket, c_ptr->fin_packet, 1000, MSG_NOSIGNAL);
