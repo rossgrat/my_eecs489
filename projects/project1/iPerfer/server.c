@@ -83,7 +83,7 @@ int acceptOnMyServer(struct myServer* s_ptr){
     s_num_recvd = recv(s_ptr->connfd, s_ptr->s_buffer, 1000, MSG_NOSIGNAL);
     //Check for FIN
     if(s_ptr->s_buffer[0] == 0xFF){
-      printf("FIN RECIEVED\n");
+      //printf("FIN RECIEVED\n");
       break;
     }
 
@@ -93,7 +93,7 @@ int acceptOnMyServer(struct myServer* s_ptr){
     }
 
     s_ptr->s_total_recvd = s_ptr->s_total_recvd + s_num_recvd; 
-    printf("TOTAL RECVD: %li\t BUFF[0]: %i\n", s_ptr->s_total_recvd, s_ptr->s_buffer[0]);
+    //printf("TOTAL RECVD: %li\t BUFF[0]: %i\n", s_ptr->s_total_recvd, s_ptr->s_buffer[0]);
   }
   //Quickly get time FIN was recieved
   time(&s_ptr->end_time);
@@ -101,7 +101,7 @@ int acceptOnMyServer(struct myServer* s_ptr){
   //Send ACK message to FIN from client
   char msg[4] = "ACK";
   int num_sent = send(s_ptr->connfd, msg, 1000, MSG_NOSIGNAL);
-  printf("ACK SENT\n");
+  //printf("ACK SENT\n");
   
   //Calculate mbps and kb recieved 
   float time_elapsed = difftime(s_ptr->end_time, s_ptr->start_time); 
@@ -109,8 +109,8 @@ int acceptOnMyServer(struct myServer* s_ptr){
   long kb_rec = s_ptr->s_total_recvd / 1000;
 
   float mb = s_ptr->s_total_recvd/ 1000000 * 8;
-  printf("TIME ELAPSED: %f\n", time_elapsed);
-  printf("MEGABITS: %f\n", mb);
+  //printf("TIME ELAPSED: %f\n", time_elapsed);
+  //printf("MEGABITS: %f\n", mb);
   //Print out mbps and kb for the autograder
   printf("Received=%ld KB, Rate=%0.3f Mbps\n", kb_rec, mbps);
   close(s_ptr->connfd);
