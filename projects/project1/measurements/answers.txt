@@ -1,23 +1,83 @@
-2)    Predicted throughput:
-      Predicted latency:
-      Actual throughput:
-      Actual latency:
-      Explanation of results:
+2)    Predicted throughput: 
+      On slide 66 on Lecture 1, the average throughput between multiple links is defined as the minimum rate of any of the links. The smallest link acts as a kind of bottleneck to the rate. So my predicted throughput is going to be that of the smallest link. From the throughput measurements in Q1, I can see that the lowest rates come from link L1 or link L4. Those rates are 20.8Mbps and 23.0Mbps. So I think the throughput for sending a message from h1 to h10 will be ~20Mbps.
 
-3.1)  Predicted throughput:
-      Predicted latency:
-      Actual throughput:
-      Actual latency:
-      Explanation of results:
+      From looking at the python code I can see that the lowest bandwidth is defined for L1, and is 20, so I could also say that I predict the throughput for sending a message from h1 to h10 would be 20Mbps.
 
-3.2)  Predicted throughput:
-      Predicted latency:
+      Predicted latency: 
+      Latency between hosts is the the addition of the transmission, propogation and queueing delays for a link, and then the addition of the total delay for each link. To go from host h1 to host h10, the packets must traverse links L1, L2, L4, and L5. In order to get a range for the prediction, I'll add up the average latencies for the pings for each link in question 1. The average latency for L1 was ~80ms. The average latency for L2 was ~25ms. The average latency for L4 was ~10ms. The average latency for L5 was ~20ms. So adding up all of these latencies, the latency of a transmission across these 4 links from h1 to h10 should be around 80 + 25 + 10 + 20 = 135ms.
+
       Actual throughput:
+      The actual throughput was between 17.8Mbps.
+
+      Actual latency: 
+      The actual average latency, when adding up the 20 RTT times and dividing by the # of packets (20) was 214.55ms. However, I think it is important to note that the numbers 135 and 136 together appeared 3/20 times.
+
+      Explanation of results: 
+      For throughput, my predicted throughput was very close to correct, the highest rate was just under 20Mbps as I predicted. This makes sense because the rate should only be as fast as the slowest rate.
+      For latency, my predicted RTT was lower than the average by around 80ms, I think this is due to greater latencies on some of the links. In Q1 the latencies of each of the packets often varied by around 80ms as well. There were 3 instances of my prediction of 135ms however, and I think had each link been functioning closer to its average, there would have been more instances. Further still, the majority of the latencies were from 135ms-190ms.
+
+
+3.1)  Predicted throughput: 
+      We know that the rate for sending a packets over links L1, L2, L4, and L4 is right around 18Mbps. I think that because two clients are trying to send data over the same links at the same, time, they will each get about half of the bandwidth, so the rate for each client will be around 9Mbps.
+
+      Predicted latency: 
+      I think that the latency will be around the same for both h1 talking to h9 and h2 talking to h10. The reason I think this is because there are 3 relevant delays when sending packets over a link, these aer transmission, propogration and queueing. The transmission and propagation delays will stay the same no matter how many clients are trying to use the link. The only delay the might change is the queueing delay because there are now more packets being sent over the links, however I don't think this will be that significant of a change if at all, because to truly incur large queueing delays I think we would need many clients talking at the same time.
+
+      Actual throughput: 
+      The actual throughput for h1 to h9 was 13.8Mbps and the actual throughtput for h2 to h10 was 9.20Mbps.
+
       Actual latency:
-      Explanation of results:
+      The average latency for h2 to h10 was 162.115ms and the average latency for h1 to h9 was 167.729.
+
+      Explanation of results: 
+      The rates of each connection were less than the rate in question 2 with just one connectiong between h1 and h10. Although the rates were not evenly split, they were around the half mark of the original 1 connection rate.
+
+      Comparing the latencies to the latency between just h1 and h10 in question 2, these concurrent latencies are both actually lower latencies, so I think that the amount of clients talking on a link at a given time does not have a large effect on the latency.
+
+
+3.2)  Predicted throughput: 
+      I think the throughput for each connection will be about 1/3 of the 19Mbps rate in question 2.
+
+      Predicted latency:
+      I don't think the number of connections will have an effect on the latency of the links.
+
+      Actual throughput: 
+      The actual throughput for the connections was as follows:
+      h1 to h10: 2.06Mbps
+      h2 to h9: 16.7Mbps
+      h5 to h6: 3.20Mbps
+
+      Actual latency:
+      The acutal latency of the connections was as follows:
+      h1 to h10: 145.037ms
+      h2 to h9: 158.621ms
+      h5 to h6: 144.779ms
+
+      Explanation of results: 
+      My prediction of an even split of the bandwidth between then three connections was wrong, the connection between h2 and h9 actual took most of the bandwidth and had the highest rate, the other two connections had much smaller rates as they took what was left of the bandwidth.
+
+      My prediction about the latency not changing due to the number of connections has stayed true through this section, the latencies of all three connections were similar to each other, question 3.1 and question 2.
+
 
 4)    Predicted throughput:
+      I think that to determine the throughput for each connection we have to look at the link with the smallest bandwidth they share. L4 has a bandwidth of 25Mbps, so I think that the throughput of the two connections h1 to h10 and h3 to h8 will total around 25Mbps, they might now be half and half, one will likely be higher than 12.5Mbps and one will be lower.
+
       Predicted latency:
+      I think that like the previous questions, the number of connections through a link will not have a significant effect on the latency of the packets unless the number of connections is extremely large. I predict the h1 to h10 latency will be the same as question 2, and the h3 to h8 latency will be the same even if h1 is not talking to h10 at the same time as h3 is talking to h8.
+
       Actual throughput:
+      The actual throughput for the connections was as follows:
+      h1 to h10: 9.41Mbps
+      h3 to h8: 17.6Mbps
+
       Actual latency:
+      The actual latency of the connections was as follows:
+      h1 to h10: 180.41ms
+      h3 to h8: 52.936ms
+
       Explanation of results:
+      My prediction for the throughput was correct , the two throughputs together, 9.41 + 17.6 yield around 27Mbps, which is close to the total bandwidth of link L4 of 25Mbps.
+
+      My prediction of the latency was also correct, the number of connections on the link failed to cause a significant change in the latency. The latency of h1 to h10 was in line with questions 2, 3.1 and 3.2, and upon checking the latency of h3 to h8 with no other connections on the link, the latency of 52.936ms is right around my other measurements of ~62ms and ~47ms.
+
+
