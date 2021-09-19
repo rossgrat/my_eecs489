@@ -1,7 +1,8 @@
 OBJS=server.o client.o main.o
-all: iPerfer
+EXEC=iPerfer
+all: $(EXEC)
 
 iPerfer:	$(OBJS)
-			$(CC) -o iPerfer $(OBJS)
+			$(CC) -o $(EXEC) $(OBJS)
 clean: 
-		-rm $(OBJS) iPerfer
+		-rm $(OBJS) $(EXEC)
